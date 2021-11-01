@@ -7,14 +7,38 @@
     "node": "^14"
   },
   "scripts": {
-    "test": "jest",
-    "start": "node index.js"
+    "test": "NODE_ICU_DATA=node_modules/full-icu jest --verbose",
+    "start:server": "nodemon src/server/index.js",
+    "start:client": "npm start src/client/index.js",
+    "start:server:debug": "DEBUG=express:* nodemon src/server/index.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "3.4.0",
-    "express": "4.17.1",
-    "jest": "27.2.5"
+    "apollo-datasource": "^3.2.0",
+    "apollo-datasource-rest": "^3.3.0",
+    "apollo-server": "^3.4.0",
+    "currency-formatter": "^1.5.9",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.7.2"
+  },
+  "devDependencies": {
+    "apollo": "^2.33.7",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
+    "cross-env": "^7.0.3",
+    "full-icu": "^1.4.0",
+    "jest": "^27.3.1",
+    "morgan": "^1.10.0",
+    "nock": "^13.1.4",
+    "node-fetch": "2.6.6",
+    "nodemon": "^2.0.14"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__utils"
+    ]
   }
 }

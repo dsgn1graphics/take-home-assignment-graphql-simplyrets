@@ -1,6 +1,37 @@
-module.exports = `
-    type Listing {
-        favoriteCount: Int
+const { gql } = require('apollo-server');
+
+const typeDefs = gql`
+	type Query {
+		listings(limit: Int): [Listing]!
+		listing(mlsId: ID!): Listing
+		# associations: [Association]!
+		# association(id: ID!): Association
+		# agents: [Agent]!
+		# agent(id: ID!): Agent
+		# offices: [Office]!
+		# office(id: ID!): Office
+		# sales: [Sales]!
+		# sale(id: ID!): Sales
+		# coAgents: [CoAgent]!
+		# coAgent(id: ID!): CoAgent
+		# taxes: [Tax]!
+		# tax(id: ID!): Tax
+		# geos: [Geo]!
+		# geo(id: ID!): Geo
+		# multipleListingServices: [Mls]!
+		# multipleListingService(id: ID!): Mls
+		# schools: [School]!
+		# school(id: ID!): School
+		# addresses: [Address]!
+		# address(id: ID!): Address
+		# parkings: [Parking]!
+		# parking(id: ID!): Parking
+		properties(limit: Int): [Property]!
+		property(mlsId: ID!): Property
+        listingsByLocation(city: String!, limit: Int): [Listing]!
+	}
+
+	type Listing {
         privateRemarks: String
         showingContactName: String
         mlsId: Int
@@ -9,17 +40,19 @@ module.exports = `
         showingInstructions: String
         leaseTerm: String
         disclaimer: String
+        specialListingConditions: String
         originalListPrice: String
         agreement: String
         listDate: String
         modified: String
-        listPrice: Int
+        listPrice: String
         internetAddressDisplay: String
         listingId: String
         internetEntireListingDisplay: String
         leaseType: String
         virtualTourUrl: String
         remarks: String
+        ownership: String
         association: Association
         sales: Sales
         coAgent: CoAgent
@@ -34,6 +67,12 @@ module.exports = `
         property: Property
     }
 
+    type Contact {
+        email: String
+        office: String
+        cell: String
+    }
+
     type Association { 
         frequency: String
         fee: Int
@@ -43,14 +82,16 @@ module.exports = `
   
     type Agent { 
         lastName: String
-        contact: String
+        contact: Contact
         address: String
         firstName: String
-        id: String 
+        id: String
+        officeMlsId: String
+        modified: String
     }
     
     type Office {
-        contact: String
+        contact: Contact
         name: String
         servingName: String
         brokerid: String
@@ -58,7 +99,7 @@ module.exports = `
     
     type Sales { 
         closeDate: String
-        closePrice: Int
+        closePrice: String
         contractDate: String
         agent: Agent
         office: Office 
@@ -66,10 +107,12 @@ module.exports = `
     
     type CoAgent { 
         lastName: String
-        contact: String
+        contact: Contact
         address: String
         firstName: String
-        id: String 
+        id: String
+        officeMlsId: String
+        modified: String
     }
     
     type Tax { 
@@ -165,3 +208,5 @@ module.exports = `
         parking: Parking 
     }
 `;
+
+module.exports = typeDefs;

@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Queries get listings data fetches a collection of listings by location 1`] = `
+Object {
+  "data": Object {
+    "listingsByLocation": Array [
+      Object {
+        "address": Object {
+          "city": "Houston",
+          "country": "United States",
+          "crossStreet": "Dunne Ave",
+          "full": "74434 East Sweet Bottom Br #18393",
+          "postalCode": "77096",
+          "state": "Texas",
+          "streetName": "East Sweet Bottom Br",
+          "streetNumber": 74434,
+          "streetNumberText": "74434",
+          "unit": "18393",
+        },
+        "leaseType": "FullServ",
+        "listDate": "2011-05-23 11:50:30",
+        "listPrice": "$20,714,261.00",
+        "mlsId": 1005192,
+        "modified": "2015-11-14 9:57:26",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries get listings data fetches a collection of listings; 1`] = `
+Object {
+  "data": Object {
+    "listings": Array [
+      Object {
+        "geo": Object {
+          "lat": 29.689418,
+          "lng": -95.474464,
+        },
+        "listDate": "2011-05-23 11:50:30",
+        "listPrice": "$20,714,261.00",
+        "listingId": "49699701",
+        "photos": Array [
+          "https://s3-us-west-2.amazonaws.com/cdn.simplyrets.com/properties/trial/home9.jpg",
+          "https://s3-us-west-2.amazonaws.com/cdn.simplyrets.com/properties/trial/home-inside-9.jpg",
+        ],
+        "property": Object {
+          "acres": null,
+          "lotDescription": "Private Backyard",
+          "type": "RES",
+        },
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries get listings data fetches a single listing when a mlsId is provided 1`] = `
+Object {
+  "data": Object {
+    "listings": Array [
+      Object {
+        "geo": Object {
+          "lat": 29.689418,
+          "lng": -95.474464,
+        },
+        "listDate": "2011-05-23 11:50:30",
+        "listPrice": "$20,714,261.00",
+        "listingId": "49699701",
+        "photos": Array [
+          "https://s3-us-west-2.amazonaws.com/cdn.simplyrets.com/properties/trial/home9.jpg",
+          "https://s3-us-west-2.amazonaws.com/cdn.simplyrets.com/properties/trial/home-inside-9.jpg",
+        ],
+        "property": Object {
+          "acres": null,
+          "lotDescription": "Private Backyard",
+          "type": "RES",
+        },
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
