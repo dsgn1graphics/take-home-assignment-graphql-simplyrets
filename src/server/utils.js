@@ -38,3 +38,20 @@ module.exports.formatPrice = (price, locale = 'en-US') => {
 	const formattedPrice = currencyFormatter.format( p.price, { code: currencyMap[locale].code });
 	return formattedPrice;
 }
+
+/**
+ * fetchData
+ * @param {any} params query params for request
+ * @param {Object} context shared server context object
+ * @param {String} api api name
+ * @param {String} method api method
+ * Reusable function to reduce code for making simple get request
+ * @returns 
+ */
+module.exports.fetchData = async (params, context, api, method) => {
+	const {
+		dataSources
+	} = context;
+	const result = await dataSources[api][method](params);
+	return result;
+}

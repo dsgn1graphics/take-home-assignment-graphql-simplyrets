@@ -1,44 +1,32 @@
-const { paginateResults } = require('../utils');
+const { fetchData } = require('../utils');
 
 const LIMIT_MAX = 20;
 const LIMIT_MIN = 5;
+const SIMPLYRETSAPI = 'simplyretsAPI';
+const GET_LISTINGS_BY_LOCATION = 'getListingsByLocation';
+const GET_PROPERTY_FOR_LISTING = 'getPropertyForListing';
+const GET_ALL_PROPERTIES = 'getAllProperties';
+const GET_LISTING_BY_ID = 'getListingById';
+const GET_ALL_LISTINGS = 'getAllListings';
 
-const fetchData = async (params, context, api, method) => {
-	const {
-		dataSources
-	} = context;
-	const result = await dataSources[api][method](params);
-	return result;
-}
+
 
 module.exports = {
 	Query: {
-		listings: async (_, { limit = LIMIT_MAX, lastId }, { dataSources }) => {
-			const results = await dataSources.simplyretsAPI.getAllListings({
-				limit: limit,
-			});
-			return results;
+		listings: async (_, { limit = LIMIT_MAX, lastId = 0 }, context) => {
+			return await fetchData({ limit, lastId }, context, SIMPLYRETSAPI, GET_ALL_LISTINGS);
 		},
-		listing: async (_, { mlsId }, { dataSources}) => {
-			const result = await dataSources.simplyretsAPI.getListingById({
-				mlsId: mlsId
-			});
-			return result;
+		listing: async (_, { mlsId }, context) => {
+			return await fetchData({ mlsId }, context, SIMPLYRETSAPI, GET_LISTING_BY_ID);
 		},
-		properties: async (_, { limit = LIMIT_MAX, lastId }, { dataSources }) => {
-			const results = await dataSources.simplyretsAPI.getAllProperties({
-				limit: limit
-			});
-			return results;
+		properties: async (_, { limit = LIMIT_MAX, lastId = 0 }, context) => {
+			return await fetchData({ limit, lastId }, context, SIMPLYRETSAPI, GET_ALL_PROPERTIES);
 		},
-		property: async (_, { mlsId }, { dataSources }) => {
-			const result = await dataSources.simplyretsAPI.getPropertyForListing({
-				mlsId: mlsId
-			});
-			return result;
+		property: async (_, { mlsId }, context) => {
+			return await fetchData({ mlsId }, context, SIMPLYRETSAPI, GET_PROPERTY_FOR_LISTING)
 		},
-		listingsByLocation: async(_, { city, limit = LIMIT_MIN}, context) => {
-			return await fetchData({ city, limit}, context, 'simplyretsAPI', 'getListingsByLocation');
+		listingsByLocation: async(_, { city, limit = LIMIT_MIN, lastId = 0}, context) => {
+			return await fetchData({ city, limit, lastId}, context, SIMPLYRETSAPI, GET_LISTINGS_BY_LOCATION);
 		}
 	}
 }

@@ -2,33 +2,11 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 	type Query {
-		listings(limit: Int): [Listing]!
+		listings(limit: Int, lastId: ID): [Listing]!
 		listing(mlsId: ID!): Listing
-		# associations: [Association]!
-		# association(id: ID!): Association
-		# agents: [Agent]!
-		# agent(id: ID!): Agent
-		# offices: [Office]!
-		# office(id: ID!): Office
-		# sales: [Sales]!
-		# sale(id: ID!): Sales
-		# coAgents: [CoAgent]!
-		# coAgent(id: ID!): CoAgent
-		# taxes: [Tax]!
-		# tax(id: ID!): Tax
-		# geos: [Geo]!
-		# geo(id: ID!): Geo
-		# multipleListingServices: [Mls]!
-		# multipleListingService(id: ID!): Mls
-		# schools: [School]!
-		# school(id: ID!): School
-		# addresses: [Address]!
-		# address(id: ID!): Address
-		# parkings: [Parking]!
-		# parking(id: ID!): Parking
-		properties(limit: Int): [Property]!
+		properties(limit: Int, lastId: ID): [Property]!
 		property(mlsId: ID!): Property
-        listingsByLocation(city: String!, limit: Int): [Listing]!
+        listingsByLocation(city: String!, limit: Int, lastId: ID): [Listing]!
 	}
 
 	type Listing {
