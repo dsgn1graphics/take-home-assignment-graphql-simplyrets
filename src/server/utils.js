@@ -38,33 +38,3 @@ module.exports.formatPrice = (price, locale = 'en-US') => {
 	const formattedPrice = currencyFormatter.format( p.price, { code: currencyMap[locale].code });
 	return formattedPrice;
 }
-
-module.exports.paginateResults = ({
-	after: pointer,
-	limit = 20,
-	results,
-	getPointer = () => null, // this can be overridden
-	}) => {
-	// if 0 || 0< return empty array
-	if (limit < 1)
-		return [];
-	// if pointer for last page item null, return results from index 0 to limit
-	if (!pointer)
-		return results.slice(0, limit);
-	// find the index of the record indicated by the pointer
-	// if no pointer exist, 
-	const pointerIndex = results.findIndex(record => {
-		const recordPointer = record.pointer ? record.pointer : getPointer(record);
-		return recordPointer ? pointer === recordPointer : false;
-	});
-
-	// return results, append new records onto collection, otherwise return the collection
-	return pointerIndex >= 0
-		? pointerIndex === results.length -1 // avoid overflow
-			? []
-			: results.slice(
-				pointerIndex + 1,
-				Math.min(results.length, pointerIndex + 1 + limit),
-			)
-		: results.slice(0, limit);
-}
