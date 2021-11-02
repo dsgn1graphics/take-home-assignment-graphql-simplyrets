@@ -5,11 +5,27 @@ Please document your code & design decisions here.
 ## Usage
 ```
 npm i
+npm run setup
 npm run start:server
 ```
 
 Open [Apollo Graphql sandbox](https://studio.apollographql.com/sandbox/explorer) to contect and explore.
 
+The setup command will create a `.env` file and generate tokens to be used for encryption with the jsonwebtoken
+
+## Authorization
+
+The server uses JWT to store some user information for validation with API request. Login to the development server first to retrieve a valid token before making data request. For this exercise, I didn't include full authentication with email & password validation. Since there's no persistent db installed.
+
+```
+curl -i http://localhost:3000/login
+```
+
+In studio you can add a new header for authorization.
+
+```
+Authorization: Bearer <jwt>
+```
 
 ## Run Test
 ```

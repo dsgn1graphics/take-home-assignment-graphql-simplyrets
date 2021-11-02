@@ -7,6 +7,7 @@ const typeDefs = gql`
 		properties(limit: Int, lastId: ID): [Property]!
 		property(mlsId: ID!): Property
         listingsByLocation(city: String!, limit: Int, lastId: ID): [Listing]!
+        users: [User]
 	}
 
 	type Listing {
@@ -184,6 +185,13 @@ const typeDefs = gql`
         subTypeText: String
         yearBuilt: Int
         parking: Parking 
+    }
+
+    type User {
+        id: Int
+        email: String
+        password: String
+        roles: [String]
     }
 `;
 

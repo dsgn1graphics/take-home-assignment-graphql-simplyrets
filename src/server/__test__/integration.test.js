@@ -7,6 +7,7 @@ const {
 	mockListingsDataTransformed,
 	mockListingsByLocationSmall
 } = require('../datasources/__mocks__/listings');
+const { mockJWT } = require('../datasources/__mocks__/simplyretsApi.mock');
 
 const SimplyretsAPI = require('../datasources/simplyrets');
 
@@ -74,6 +75,14 @@ const GET_LISTINGS_BY_LOCATION = gql`
 	}
 `;
 
+const mockContextRequest = {
+	req: {
+		headers: {
+			authorization: mockJWT
+		}
+	}
+}
+
 describe('Queries', () => {
 	describe('get listings data', () => {
 		it('fetches a collection of listings;', async () => {
@@ -83,8 +92,10 @@ describe('Queries', () => {
 			const simplyretsAPI = server.config.dataSources().simplyretsAPI;
 
 			simplyretsAPI.get = jest.fn(() => mockListingsDataTransformed);
-			// simplyretsAPI.getAllListings.mockReturnValueOnce(mockListingsDataTransformed);
-			const res = await server.executeOperation({ query: LISTINGS_LAYOUT_VIEW_QUERY });
+			const res = await server.executeOperation(
+				{ query: LISTINGS_LAYOUT_VIEW_QUERY },
+				mockContextRequest
+			);
 			expect(res).toMatchSnapshot();
 		});
 
@@ -95,8 +106,10 @@ describe('Queries', () => {
 			const simplyretsAPI = server.config.dataSources().simplyretsAPI;
 
 			simplyretsAPI.get = jest.fn(() => mockListingsDataTransformed[0]);
-			// simplyretsAPI.getAllListings.mockReturnValueOnce(mockListingsDataTransformed);
-			const res = await server.executeOperation({ query: LISTINGS_LAYOUT_VIEW_QUERY });
+			const res = await server.executeOperation(
+				{ query: LISTINGS_LAYOUT_VIEW_QUERY },
+				mockContextRequest
+			);
 			expect(res).toMatchSnapshot();
 
 		});
@@ -108,8 +121,28 @@ describe('Queries', () => {
 			const simplyretsAPI = server.config.dataSources().simplyretsAPI;
 
 			simplyretsAPI.get = jest.fn(() => mockListingsByLocationSmall);
-			// simplyretsAPI.getAllListings.mockReturnValueOnce(mockListingsDataTransformed);
-			const res = await server.executeOperation({ query: GET_LISTINGS_BY_LOCATION });
+			const res = await server.executeOperation(
+				{ query: GET_LISTINGS_BY_LOCATION },
+				mockContextRequest
+			);
+			expect(res).toMatchSnapshot();
+		})
+
+		it('returns an error message when isAuth is false', async () => {
+			const {
+				server
+			} = constructTestServer();
+			const simplyretsAPI = server.config.dataSources().simplyretsAPI;
+
+			simplyretsAPI.get = jest.fn(() => mockListingsDataTransformed);
+			const res = await server.executeOperation(
+				{ query: LISTINGS_LAYOUT_VIEW_QUERY },
+				{req: {
+					headers: {
+						authorization: null
+					}
+				}}
+			);
 			expect(res).toMatchSnapshot();
 		})
 	});

@@ -4,6 +4,10 @@ const {
 	listingReducerByLocationSmall
 } = require('./simplyrets_reducer');
 const { RESTDataSource } = require('apollo-datasource-rest');
+const {
+	users,
+	acl
+} = require('../users/__mocks__/users');
 
 class SimplyretsAPI extends RESTDataSource {
 	propertiesPath = 'properties';
@@ -90,6 +94,10 @@ class SimplyretsAPI extends RESTDataSource {
 				return listingReducerByLocationSmall(record);
 			})
 			: [];
+	}
+
+	async getUsers({ limit, lastId }) {
+		return users
 	}
 }
 

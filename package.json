@@ -10,7 +10,8 @@
     "test": "NODE_ICU_DATA=node_modules/full-icu jest --verbose",
     "start:server": "nodemon src/server/index.js",
     "start:client": "npm start src/client/index.js",
-    "start:server:debug": "DEBUG=express:* nodemon src/server/index.js"
+    "start:server:debug": "DEBUG=express:* nodemon src/server/index.js",
+    "setup": "node scripts/setup.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,8 @@
     "apollo-server": "^3.4.0",
     "currency-formatter": "^1.5.9",
     "dotenv": "^10.0.0",
-    "graphql": "^15.7.2"
+    "graphql": "^15.7.2",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "apollo": "^2.33.7",

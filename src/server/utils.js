@@ -1,4 +1,5 @@
 const currencyFormatter = require('currency-formatter');
+const { users, acl } = require('./users/__mocks__/users');
 
 /**
  * formatDate
@@ -34,7 +35,6 @@ module.exports.formatPrice = (price, locale = 'en-US') => {
 
 	// need a mutable copy to manipulate
 	let p = { price };
-	// console.log(currencyFormatter);
 	const formattedPrice = currencyFormatter.format( p.price, { code: currencyMap[locale].code });
 	return formattedPrice;
 }
@@ -45,13 +45,29 @@ module.exports.formatPrice = (price, locale = 'en-US') => {
  * @param {Object} context shared server context object
  * @param {String} api api name
  * @param {String} method api method
+ * @param {String} resolver caller name
  * Reusable function to reduce code for making simple get request
  * @returns 
  */
-module.exports.fetchData = async (params, context, api, method) => {
+module.exports.fetchData = async (params, context, api, method, resolver) => {
 	const {
-		dataSources
+		dataSources,
+		user,
+		isAuth,
 	} = context;
-	const result = await dataSources[api][method](params);
-	return result;
+	const userAcls = acl.users.find(u => u.id === user.id);
+
+	if (isAuth && userAcls.active.indexOf(resolver) >= 0) {
+		const response = await dataSources[api][method](params);
+		return response;
+	}
+	
+	return [{
+		errors: [
+			{
+				code: 401,
+				message: 'UNAUTHORIZED: Invalid token'
+			}
+		]
+	}]
 }

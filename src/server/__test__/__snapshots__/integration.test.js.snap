@@ -102,3 +102,18 @@ Object {
   },
 }
 `;
+
+exports[`Queries get listings data returns an error message when isAuth is false 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot read properties of null (reading 'id')],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
