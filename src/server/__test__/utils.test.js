@@ -45,9 +45,10 @@ describe('fetchData', () => {
 			GET_ALL_LISTINGS,
 			LISTINGS,
 		)
+		expect(Array.isArray(res)).toBeTruthy();
 		const error = res[0].errors[0];
 		expect(error.code).toEqual(401);
-		expect(error.message).toEqual('UNAUTHORIZED: Invalid token')
+		expect(error.message).toEqual('UNAUTHORIZED: Invalid token');
 	});
 
 	it('should return the expected data', async () => {	
