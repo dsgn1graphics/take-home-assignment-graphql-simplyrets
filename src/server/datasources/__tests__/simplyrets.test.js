@@ -13,7 +13,7 @@ const mocks = {
 const api = new SimplyretsAPI({ authToken: 'abcd1234abcd1234'});
 api.get = mocks.get;
 
-fdescribe('SimplyretsAPI', () => {
+describe('SimplyretsAPI', () => {
 	describe('[getAllListings]', () => {
 		it('returns an array of listings', async () => {
 			mocks.get.mockReturnValue(mockListingsData);
@@ -26,7 +26,7 @@ fdescribe('SimplyretsAPI', () => {
 		})	
 	})
 	
-	fdescribe('[getListingById]', () => {
+	describe('[getListingById]', () => {
 		it('returns a listing', async () => {
 			mocks.get.mockReturnValue(mockListingsData[0]);
 			const res = await api.getListingById({
