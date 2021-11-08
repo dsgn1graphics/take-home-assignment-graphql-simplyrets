@@ -1,5 +1,6 @@
 const currencyFormatter = require('currency-formatter');
 const { users, acl } = require('./users/__mocks__/users');
+const { schemaMap } = require('./schema_map');
 
 /**
  * formatDate
@@ -61,13 +62,15 @@ module.exports.fetchData = async (params, context, api, method, resolver) => {
 		const response = await dataSources[api][method](params);
 		return response;
 	}
-	
-	return [{
+
+	const errorMsg = {
 		errors: [
 			{
 				code: 401,
 				message: 'UNAUTHORIZED: Invalid token'
 			}
 		]
-	}]
+	};
+
+	return schemaMap[resolver] === 'multiple' ? [errorMsg] : errorMsg;
 }
